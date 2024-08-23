@@ -5,6 +5,7 @@ public class Tamagotchi {
 
   private String name;
   private int daysAlive;
+  private int yearsAlive;
   private int hunger;
   private int happiness;
   private int health;
@@ -14,7 +15,7 @@ public class Tamagotchi {
   public Tamagotchi(String name) {
     this.bornDate = LocalDateTime.now();
     this.name = name;
-    this.daysAlive = 1;
+    this.daysAlive = 0;
     this.hunger = 100;
     this.happiness = 100;
     this.health = 100;
@@ -27,6 +28,10 @@ public class Tamagotchi {
 
   public int getDaysAlive() {
     return this.daysAlive;
+  }
+
+  public int getYearsAlive() {
+    return this.yearsAlive;
   }
 
   public int getHunger() {
@@ -78,9 +83,10 @@ public class Tamagotchi {
   }
 
   public void checkStatus() {
-    System.out.printf("%s", getName());
-    System.out.printf("| Hunger: %d | Happiness: %d | Health: %d | Alive: %b | Born date: %s |%n", getHunger(), getHappiness(), getHealth(), getIsDead(), getBornDate());
+    System.out.printf("|-- %s --|", getName());
+    System.out.printf(" Hunger: %d | Happiness: %d | Health: %d | Alive: %b | Born date: %s |%n", getHunger(), getHappiness(), getHealth(), !getIsDead(), getBornDate());
   }
+
 
   public boolean checkIsAlive() {
     if (getHealth() == 0 || getHunger() == 0) {
@@ -92,9 +98,15 @@ public class Tamagotchi {
   }
 
   public void ageOneYear() {
-    while(checkIsAlive()) {
+    while(checkIsAlive() && getDaysAlive() < 365) {
+      this.daysAlive++;
+    } 
 
+    if (getDaysAlive() >= 365) {
+      this.yearsAlive++;
+      this.daysAlive = 0;
     }
+
     // contar ate 365 dias. se der 365 dias, conta como 1 ano de vida
 
   }
