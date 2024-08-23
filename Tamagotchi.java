@@ -48,7 +48,7 @@ public class Tamagotchi {
 
   public String getBornDate() {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-    return this.bornDate.format(formatter);
+    return this.bornDate.format(formatter); // retorna data, hora, minutos e segundos como String
   }
 
   public boolean getIsDead() {
@@ -74,12 +74,15 @@ public class Tamagotchi {
     } else {
       System.out.printf("%s is dead.", getName());
     }
-
   }
 
   public void play() {
-    // aumentar felicidade em 10
-
+    if (getHappiness() < 100) {
+      this.happiness += 10;
+      this.hunger -= 5;
+    } else {
+      System.out.printf("%s is happy!%n", getName());
+    }
   }
 
   public void checkStatus() {
@@ -87,13 +90,11 @@ public class Tamagotchi {
     System.out.printf(" Hunger: %d | Happiness: %d | Health: %d | Alive: %b | Born date: %s |%n", getHunger(), getHappiness(), getHealth(), !getIsDead(), getBornDate());
   }
 
-
   public boolean checkIsAlive() {
     if (getHealth() == 0 || getHunger() == 0) {
       setDead(true);
       return false;
     }
-
     return true;
   }
 
@@ -106,8 +107,6 @@ public class Tamagotchi {
       this.yearsAlive++;
       this.daysAlive = 0;
     }
-
-    // contar ate 365 dias. se der 365 dias, conta como 1 ano de vida
 
   }
 
