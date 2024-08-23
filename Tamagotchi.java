@@ -9,7 +9,7 @@ public class Tamagotchi {
   private int happiness;
   private int health;
   private LocalDateTime bornDate;
-  private boolean isAlive;
+  private boolean isDead;
 
   public Tamagotchi(String name) {
     this.bornDate = LocalDateTime.now();
@@ -18,7 +18,7 @@ public class Tamagotchi {
     this.hunger = 100;
     this.happiness = 100;
     this.health = 100;
-    this.isAlive = true;
+    this.isDead = false;
   }
 
   public String getName() {
@@ -46,8 +46,16 @@ public class Tamagotchi {
     return this.bornDate.format(formatter);
   }
 
-  public boolean getIsAlive() {
-    return this.isAlive;
+  public boolean getIsDead() {
+    return this.isDead;
+  }
+
+  public void setDead(boolean dead) {
+    this.isDead = dead;
+  }
+
+  public boolean isAlive() {
+    return !getIsDead(); // retorna como false caso tenha colocado o setDead(true)
   }
 
   public void rename(String name) {
@@ -71,10 +79,22 @@ public class Tamagotchi {
 
   public void checkStatus() {
     System.out.printf("%s", getName());
-    System.out.printf("| Hunger: %d | Happiness: %d | Health: %d | Alive: %b | Born date: %s |%n", getHunger(), getHappiness(), getHealth(), getIsAlive(), getBornDate());
+    System.out.printf("| Hunger: %d | Happiness: %d | Health: %d | Alive: %b | Born date: %s |%n", getHunger(), getHappiness(), getHealth(), getIsDead(), getBornDate());
+  }
+
+  public boolean checkIsAlive() {
+    if (getHealth() == 0 || getHunger() == 0) {
+      setDead(true);
+      return false;
+    }
+
+    return true;
   }
 
   public void ageOneYear() {
+    while(checkIsAlive()) {
+
+    }
     // contar ate 365 dias. se der 365 dias, conta como 1 ano de vida
 
   }
